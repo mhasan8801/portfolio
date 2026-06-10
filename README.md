@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SDET Portfolio Project - Setup Guide
 
-## Getting Started
+This guide will walk you through setting up your MySQL database and running your portfolio website.
 
-First, run the development server:
+## Step 1: Create a MySQL Database (Free Resource)
+
+I recommend using **TiDB Cloud (Serverless)** because it offers a generous free tier for MySQL.
+
+1.  Go to [TiDB Cloud](https://pingcap.com/ai-augmented-sdet-portfolio) and sign up for a free account.
+2.  Create a **Serverless Cluster**.
+3.  Click **Connect** and choose **Prisma**.
+4.  Copy the connection string (it looks like `mysql://user:password@host:port/database?sslaccept=strict`).
+
+*Alternatively, if you have MySQL installed locally:*
+Your connection string will be: `mysql://root:yourpassword@localhost:3306/portfolio_db`
+
+## Step 2: Update Environment Variables
+
+Open the file named `.env` in the root of this project and replace its content with the following:
+
+```env
+# Database Connection
+DATABASE_URL="PASTE_YOUR_CONNECTION_STRING_HERE"
+
+# NextAuth Configuration
+# Run 'openssl rand -base64 32' in your terminal to generate a secure secret
+NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+## Step 3: Initialize Database & Seed Admin
+
+Run these commands in your terminal to synchronize the database schema and create the initial admin account:
+
+```bash
+# 1. Sync the database schema
+npx prisma db push
+
+# 2. Seed the initial admin user
+npx prisma db seed
+```
+
+**Default Admin Credentials:**
+- **Username:** `admin`
+- **Password:** `admin123`
+
+## Step 4: Run the Website
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit the website at:
+- **Portfolio:** [http://localhost:3000](http://localhost:3000)
+- **Admin Dashboard:** [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Technical Stack Used:
+- **Framework**: Next.js 15 (App Router)
+- **Database**: MySQL via Prisma ORM
+- **Auth**: NextAuth.js
+- **Styling**: Vanilla CSS (Premium Look)
+- **i18n**: Custom Language Context (EN/ID)
+- The Coming Soon page is intentionally minimal and self-contained so it can be used as index.html while you build the rest of your site.
+- Alternatively remove or change the small override script in index.html that forces COMING_SOON.
