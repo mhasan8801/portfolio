@@ -22,11 +22,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <ThemeProvider>
           <LanguageProvider>
-            <Navbar />
+           {/* <Navbar /> */}
             {children}
-            <footer className="container" style={{ padding: "4rem 0", textAlign: "center", color: "var(--text-muted)", borderTop: "1px solid var(--glass-border)" }}>
+            {/* <footer className="container" style={{ padding: "4rem 0", textAlign: "center", color: "var(--text-muted)", borderTop: "1px solid var(--glass-border)" }}>
               <p suppressHydrationWarning>&copy; {new Date().getFullYear()} {siteConfig.footerText}</p>
-            </footer>
+            </footer>*/}
           </LanguageProvider>
         </ThemeProvider>
       </body>
